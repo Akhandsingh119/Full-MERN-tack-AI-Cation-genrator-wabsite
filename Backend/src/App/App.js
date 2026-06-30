@@ -8,10 +8,15 @@ const cors = require('cors');
 const rateLimiter=require("../middleware1/rateLimiter.normal")
 
 const app=express()
-app.use(cors({
-  origin: "*"
-}));
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://full-mern-tack-ai-cation-genrator-w.vercel.app/",
+];
 
+app.use(cors({
+  origin: allowedOrigins,
+  credentials: true,
+}));
 app.use(express.json())
 app.use(cookieParser())
 app.use(rateLimiter)
