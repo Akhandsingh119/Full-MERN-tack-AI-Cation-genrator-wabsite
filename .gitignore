@@ -1,0 +1,104 @@
+# ===========================
+# Environment Variables
+# ===========================
+.env
+.env.*
+!.env.example
+
+# ===========================
+# Dependencies
+# ===========================
+node_modules/
+
+# ===========================
+# Build Outputs
+# ===========================
+dist/
+build/
+out/
+.next/
+.nuxt/
+
+# ===========================
+# Vite Cache
+# ===========================
+.vite/
+.cache/
+.parcel-cache/
+
+# ===========================
+# Logs
+# ===========================
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# ===========================
+# Runtime & Temp Files
+# ===========================
+pids/
+*.pid
+*.seed
+*.pid.lock
+*.tsbuildinfo
+
+# ===========================
+# Coverage & Testing
+# ===========================
+coverage/
+*.lcov
+.nyc_output/
+
+# ===========================
+# OS Generated Files
+# ===========================
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Linux
+*~
+
+# ===========================
+# Editor & IDE Files
+# ===========================
+# VSCode
+.vscode/
+!.vscode/extensions.json
+
+# JetBrains (WebStorm, IntelliJ, etc.)
+.idea/
+*.iml
+
+# Vim / Neovim
+*.swp
+*.swo
+*.swn
+
+# ===========================
+# Package Manager Locks
+# (keep package-lock.json or yarn.lock, not both)
+# ===========================
+# Uncomment the one you don't use:
+# yarn.lock
+# package-lock.json
+
+# ===========================
+# Misc
+# ===========================
+*.tgz
+.yarn-integrity
+.npm/
+.eslintcache
+.stylelintcache
