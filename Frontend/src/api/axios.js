@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-   baseURL: "https://my-backend.vercel.app/api",
+   baseURL: "https://full-mern-tack-ai-cation-genrator-w.vercel.app",
   withCredentials: true,
 });
 
