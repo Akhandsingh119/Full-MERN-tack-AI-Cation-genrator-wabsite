@@ -10,7 +10,7 @@ const rateLimiter=require("../middleware1/rateLimiter.normal")
 const app=express()
 const allowedOrigins = [
   "http://localhost:5173",
-  "https://full-mern-tack-ai-cation-genrator-w.vercel.app",
+  "https://full-mern-tack-ai-cation-genrator-w-teal.vercel.app",
 ];
 
 app.use(cors({
