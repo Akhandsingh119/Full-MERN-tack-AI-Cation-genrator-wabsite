@@ -10,4 +10,4 @@ const PORT = process.env.PORT || 4000
 DB()
 
 
-app.listen(PORT, () => console.log("Server Running on port " + PORT)) 
+App.listen(PORT, () => console.log("Server Running on port " + PORT)) 
