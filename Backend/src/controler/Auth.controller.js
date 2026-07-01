@@ -57,7 +57,8 @@ async function Register(req, res) {
             userId: user._id
         });
     } catch (error) {
-        res.status(500).json({ message: "Server error" });
+        console.error("Register error:", error);
+        res.status(500).json({ message: "Server error", error: error.message });
     }
 }
 
@@ -97,7 +98,8 @@ async function Login(req, res) {
             id: user._id
         });
     } catch (error) {
-        res.status(500).json({ message: "Server error" });
+        console.error("Login error:", error);
+        res.status(500).json({ message: "Server error", error: error.message });
     }
 }
 
