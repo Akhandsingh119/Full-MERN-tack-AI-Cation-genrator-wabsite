@@ -29,7 +29,19 @@ export default function NotificationBell() {
   const updatePosition = useCallback(() => {
     if (btnRef.current) {
       const rect = btnRef.current.getBoundingClientRect();
-      setPos({ top: rect.bottom + 8, right: window.innerWidth - rect.right });
+      
+      // Calculate right position, ensuring at least 16px of padding from the right screen edge
+      let calcRight = window.innerWidth - rect.right;
+      calcRight = Math.max(16, calcRight);
+
+      // Prevent the panel from bleeding off the left edge on very small screens
+      // 360 is the max-width on desktop, calc(100vw-32px) on mobile
+      const expectedWidth = window.innerWidth < 392 ? window.innerWidth - 32 : 360;
+      if (window.innerWidth - calcRight < expectedWidth) {
+        calcRight = 16; // Force standard margin if it would overflow left
+      }
+
+      setPos({ top: rect.bottom + 8, right: calcRight });
     }
   }, []);
 
@@ -47,10 +59,12 @@ export default function NotificationBell() {
     };
     const handleEsc = (e) => { if (e.key === 'Escape') setOpen(false); };
     const handleMove = () => updatePosition();
+    
     document.addEventListener('mousedown', handleClick);
     window.addEventListener('keydown', handleEsc);
     window.addEventListener('scroll', handleMove, true);
     window.addEventListener('resize', handleMove);
+    
     return () => {
       cancelAnimationFrame(raf);
       document.removeEventListener('mousedown', handleClick);
@@ -85,9 +99,10 @@ export default function NotificationBell() {
           animate={animReady ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.25, ease: 'easeInOut' }}
           style={{ position: 'fixed', top: pos.top, right: pos.right, zIndex: 999999 }}
-          className="w-[360px] max-h-[480px] bg-charcoal border border-gold/30 shadow-[0_0_20px_rgba(0,0,0,0.5)] overflow-hidden"
+          // CHANGED: Made width and max-height responsive for mobile
+          className="w-[calc(100vw-32px)] sm:w-[360px] max-h-[85vh] sm:max-h-[480px] bg-charcoal border border-gold/30 shadow-[0_0_20px_rgba(0,0,0,0.5)] overflow-hidden flex flex-col"
         >
-          <div className="flex items-center justify-between px-4 py-3 border-b border-gold/20">
+          <div className="flex items-center justify-between px-4 py-3 border-b border-gold/20 flex-shrink-0">
             <h3 className="text-xs font-body font-semibold uppercase tracking-widest text-champagne">Notifications</h3>
             {unreadCount > 0 && (
               <button
@@ -99,7 +114,8 @@ export default function NotificationBell() {
             )}
           </div>
 
-          <div className="overflow-y-auto max-h-[400px]">
+          {/* CHANGED: Allowed the list to flexibly take remaining space within the new responsive constraints */}
+          <div className="overflow-y-auto flex-1">
             {notifications.length === 0 ? (
               <div className="flex flex-col items-center justify-center py-12 px-4 text-center">
                 <div className="w-12 h-12 border border-gold/20 flex items-center justify-center mb-3">
