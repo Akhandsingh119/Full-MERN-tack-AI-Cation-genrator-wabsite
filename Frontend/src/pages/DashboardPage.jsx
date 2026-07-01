@@ -208,99 +208,100 @@ export default function DashboardPage() {
               </div>
 
               {/* Content: Image + Caption side by side */}
-              <div className="grid sm:grid-cols-2 gap-0">
-                <div className="p-0 sm:p-0 flex items-stretch border-b sm:border-b-0 sm:border-r border-gold/20 bg-obsidian/30">
-                  {previewUrl && (
-                    <img src={previewUrl} alt="Uploaded" className="h-full w-full object-cover border-0" />
-                  )}
-                </div>
-                <div className="p-6 sm:p-8 flex flex-col justify-start h-[360px]">
-                  {/* Variant Tabs */}
-                  {result?.variants && (
-                    <div className="flex border-b border-gold/20 mb-4 flex-shrink-0">
-                      {['short', 'medium', 'long'].map((key) => (
-                        <button
-                          key={key}
-                          onClick={() => { setActiveVariant(key); setCopied(false); }}
-                          className={`px-4 py-2 text-xs font-body font-semibold uppercase tracking-widest transition-all duration-300 border-b-2 -mb-[1px] ${
-                            activeVariant === key
-                              ? 'border-gold text-gold'
-                              : 'border-transparent text-pewter hover:text-champagne'
-                          }`}
-                        >
-                          {key === 'short' ? 'Short' : key === 'medium' ? 'Medium' : 'Long'}
-                        </button>
-                      ))}
-                    </div>
-                  )}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-0">
+  <div className="h-[250px] sm:h-auto w-full p-0 flex items-stretch border-b sm:border-b-0 sm:border-r border-gold/20 bg-obsidian/30">
+    {previewUrl && (
+      <img src={previewUrl} alt="Uploaded" className="h-full w-full object-cover border-0" />
+    )}
+  </div>
+  
+  <div className="p-6 sm:p-8 flex flex-col justify-start min-h-[360px] h-auto sm:h-[360px]">
+    {/* Variant Tabs */}
+    {result?.variants && (
+      <div className="flex overflow-x-auto border-b border-gold/20 mb-4 flex-shrink-0">
+        {['short', 'medium', 'long'].map((key) => (
+          <button
+            key={key}
+            onClick={() => { setActiveVariant(key); setCopied(false); }}
+            className={`px-4 py-2 text-xs font-body font-semibold uppercase tracking-widest transition-all duration-300 border-b-2 -mb-[1px] whitespace-nowrap ${
+              activeVariant === key
+                ? 'border-gold text-gold'
+                : 'border-transparent text-pewter hover:text-champagne'
+            }`}
+          >
+            {key === 'short' ? 'Short' : key === 'medium' ? 'Medium' : 'Long'}
+          </button>
+        ))}
+      </div>
+    )}
 
-                  <div className="flex-1 min-h-0 overflow-y-auto mb-4">
-                    <AnimatePresence mode="wait">
-                      <motion.p
-                        key={activeVariant}
-                        initial={{ opacity: 0, y: 4 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -4 }}
-                        transition={{ duration: 0.2 }}
-                        className="text-base sm:text-lg font-body font-light text-champagne leading-relaxed"
-                      >
-                        {currentCaption}
-                      </motion.p>
-                    </AnimatePresence>
-                  </div>
+    <div className="flex-1 min-h-[100px] sm:min-h-0 overflow-y-auto mb-4">
+      <AnimatePresence mode="wait">
+        <motion.p
+          key={activeVariant}
+          initial={{ opacity: 0, y: 4 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -4 }}
+          transition={{ duration: 0.2 }}
+          className="text-base sm:text-lg font-body font-light text-champagne leading-relaxed"
+        >
+          {currentCaption}
+        </motion.p>
+      </AnimatePresence>
+    </div>
 
-                  <div className="h-px bg-gradient-to-r from-gold/30 via-gold/10 to-transparent mb-4" />
+    <div className="h-px bg-gradient-to-r from-gold/30 via-gold/10 to-transparent mb-4" />
 
-                  <div className="flex flex-wrap items-center gap-2.5 mb-3">
-                    <button
-                      onClick={handleCopy}
-                      className="inline-flex items-center gap-1.5 px-4 py-2 border-2 border-gold text-xs font-body font-semibold uppercase tracking-widest text-gold hover:bg-gold hover:text-obsidian hover:shadow-[0_0_15px_rgba(212,175,55,0.3)] transition-all duration-500"
-                    >
-                      {copied ? 'Copied' : 'Copy Caption'}
-                    </button>
-                    <button
-                      onClick={handleUpload}
-                      disabled={uploading}
-                      className="inline-flex items-center gap-1.5 px-4 py-2 border border-gold/20 text-xs font-body font-semibold uppercase tracking-widest text-pewter hover:text-champagne hover:border-gold/40 transition-all duration-300 disabled:opacity-30"
-                    >
-                      <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.8}>
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182" />
-                      </svg>
-                      Regenerate
-                    </button>
-                  </div>
+    <div className="flex flex-wrap items-center gap-2.5 mb-3">
+      <button
+        onClick={handleCopy}
+        className="inline-flex items-center gap-1.5 px-4 py-2 border-2 border-gold text-xs font-body font-semibold uppercase tracking-widest text-gold hover:bg-gold hover:text-obsidian hover:shadow-[0_0_15px_rgba(212,175,55,0.3)] transition-all duration-500"
+      >
+        {copied ? 'Copied' : 'Copy Caption'}
+      </button>
+      <button
+        onClick={handleUpload}
+        disabled={uploading}
+        className="inline-flex items-center gap-1.5 px-4 py-2 border border-gold/20 text-xs font-body font-semibold uppercase tracking-widest text-pewter hover:text-champagne hover:border-gold/40 transition-all duration-300 disabled:opacity-30"
+      >
+        <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.8}>
+          <path strokeLinecap="round" strokeLinejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182" />
+        </svg>
+        Regenerate
+      </button>
+    </div>
 
-                  <div className="flex items-center gap-2 text-xs font-body text-pewter uppercase tracking-widest">
-                    <span>{wordCount} words</span>
-                    {genTime && <><span className="text-gold/40">•</span><span>Generated in {genTime}s</span></>}
-                  </div>
+    <div className="flex items-center gap-2 text-xs font-body text-pewter uppercase tracking-widest flex-wrap">
+      <span>{wordCount} words</span>
+      {genTime && <><span className="text-gold/40">•</span><span>Generated in {genTime}s</span></>}
+    </div>
 
-                  {/* Hashtags */}
-                  {result?.hashtags?.length > 0 && (
-                    <div className="mt-5 pt-4 border-t border-gold/20">
-                      <div className="flex items-center justify-between mb-3">
-                        <h4 className="text-xs font-body font-semibold uppercase tracking-widest text-gold">Hashtags</h4>
-                        <button
-                          onClick={handleCopyHashtags}
-                          className="text-xs font-body font-semibold uppercase tracking-widest text-pewter hover:text-gold transition-colors duration-300"
-                        >
-                          {copiedHashtags ? 'Copied!' : 'Copy All'}
-                        </button>
-                      </div>
-                      <div className="flex flex-wrap gap-2">
-                        {result.hashtags.map((tag, i) => (
-                          <span
-                            key={i}
-                            className="inline-block px-2.5 py-1 border border-gold/20 text-xs font-body text-gold/80"
-                          >
-                            {tag}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-                </div>
-              </div>
+    {/* Hashtags */}
+    {result?.hashtags?.length > 0 && (
+      <div className="mt-5 pt-4 border-t border-gold/20">
+        <div className="flex items-center justify-between mb-3">
+          <h4 className="text-xs font-body font-semibold uppercase tracking-widest text-gold">Hashtags</h4>
+          <button
+            onClick={handleCopyHashtags}
+            className="text-xs font-body font-semibold uppercase tracking-widest text-pewter hover:text-gold transition-colors duration-300"
+          >
+            {copiedHashtags ? 'Copied!' : 'Copy All'}
+          </button>
+        </div>
+        <div className="flex flex-wrap gap-2">
+          {result.hashtags.map((tag, i) => (
+            <span
+              key={i}
+              className="inline-block px-2.5 py-1 border border-gold/20 text-xs font-body text-gold/80"
+            >
+              {tag}
+            </span>
+          ))}
+        </div>
+      </div>
+    )}
+  </div>
+</div>
             </div>
           </div>
         )}
