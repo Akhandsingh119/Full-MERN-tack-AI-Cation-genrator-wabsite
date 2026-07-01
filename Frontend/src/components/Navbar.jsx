@@ -93,36 +93,38 @@ export default function Navbar() {
         </div>
 
         {mobileOpen && (
-          <div className="md:hidden py-4 border-t border-gold/20 animate-fade-in">
-            <div className="flex flex-col gap-1">
-              <Link to="/" onClick={() => setMobileOpen(false)} className={`text-xs font-body font-semibold uppercase tracking-widest px-3 py-2.5 transition-colors duration-300 ${isActive('/') ? 'text-gold' : 'text-pewter hover:text-champagne'}`}>
-                Home
-              </Link>
-              {isAuthenticated && (
-                <>
-                  <Link to="/dashboard" onClick={() => setMobileOpen(false)} className={`text-xs font-body font-semibold uppercase tracking-widest px-3 py-2.5 transition-colors duration-300 ${isActive('/dashboard') ? 'text-gold' : 'text-pewter hover:text-champagne'}`}>
-                    New Caption
-                  </Link>
-                  <Link to="/history" onClick={() => setMobileOpen(false)} className={`text-xs font-body font-semibold uppercase tracking-widest px-3 py-2.5 transition-colors duration-300 ${isActive('/history') ? 'text-gold' : 'text-pewter hover:text-champagne'}`}>
-                    History
-                  </Link>
-                </>
-              )}
-              <div className="h-px bg-gold/20 my-2" />
-              {isAuthenticated ? (
-                <button onClick={handleLogout} className="text-left text-xs font-body font-semibold uppercase tracking-widest text-pewter hover:text-red-400 px-3 py-2.5 transition-colors duration-300">
-                  Sign Out
-                </button>
-              ) : (
-                <>
-                  <Link to="/login" onClick={() => setMobileOpen(false)} className="text-xs font-body font-semibold uppercase tracking-widest text-pewter hover:text-champagne px-3 py-2.5 transition-colors duration-300">
-                    Sign In
-                  </Link>
-                  <Link to="/register" onClick={() => setMobileOpen(false)} className="text-xs font-body font-semibold uppercase tracking-widest border-2 border-gold text-gold hover:bg-gold hover:text-obsidian px-3 py-2.5 text-center mt-1 transition-all duration-500">
-                    Get Started
-                  </Link>
-                </>
-              )}
+          <div className="md:hidden fixed inset-x-0 top-16 z-40 bg-obsidian/95 backdrop-blur-md border-b border-gold/20 py-4 animate-fade-in">
+            <div className="max-w-6xl mx-auto px-5 sm:px-8">
+              <div className="flex flex-col gap-1">
+                <Link to="/" onClick={() => setMobileOpen(false)} className={`text-xs font-body font-semibold uppercase tracking-widest px-3 py-2.5 transition-colors duration-300 ${isActive('/') ? 'text-gold' : 'text-pewter hover:text-champagne'}`}>
+                  Home
+                </Link>
+                {isAuthenticated && (
+                  <>
+                    <Link to="/dashboard" onClick={() => setMobileOpen(false)} className={`text-xs font-body font-semibold uppercase tracking-widest px-3 py-2.5 transition-colors duration-300 ${isActive('/dashboard') ? 'text-gold' : 'text-pewter hover:text-champagne'}`}>
+                      New Caption
+                    </Link>
+                    <Link to="/history" onClick={() => setMobileOpen(false)} className={`text-xs font-body font-semibold uppercase tracking-widest px-3 py-2.5 transition-colors duration-300 ${isActive('/history') ? 'text-gold' : 'text-pewter hover:text-champagne'}`}>
+                      History
+                    </Link>
+                  </>
+                )}
+                <div className="h-px bg-gold/20 my-2" />
+                {isAuthenticated ? (
+                  <button onClick={handleLogout} className="text-left text-xs font-body font-semibold uppercase tracking-widest text-pewter hover:text-red-400 px-3 py-2.5 transition-colors duration-300">
+                    Sign Out
+                  </button>
+                ) : (
+                  <>
+                    <Link to="/login" onClick={() => setMobileOpen(false)} className="text-xs font-body font-semibold uppercase tracking-widest text-pewter hover:text-champagne px-3 py-2.5 transition-colors duration-300">
+                      Sign In
+                    </Link>
+                    <Link to="/register" onClick={() => setMobileOpen(false)} className="text-xs font-body font-semibold uppercase tracking-widest border-2 border-gold text-gold hover:bg-gold hover:text-obsidian px-3 py-2.5 text-center mt-1 transition-all duration-500">
+                      Get Started
+                    </Link>
+                  </>
+                )}
+              </div>
             </div>
           </div>
         )}
