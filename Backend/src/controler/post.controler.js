@@ -45,7 +45,7 @@ const createpostcontroler = async (req, res) => {
     });
   } catch (error) {
     console.log(error.message);
-    res.status(500).json({ message: 'Failed to generate caption' });
+    res.status(500).json({ message: `Failed to generate caption because ${error.message}` });
   }
 };
 
