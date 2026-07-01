@@ -49,6 +49,7 @@ function AppShell() {
         draggable
         pauseOnHover
         theme="dark"
+        toastClassName="!bg-charcoal !border-gold/30 !text-champagne !font-body !shadow-[0_0_15px_rgba(212,175,55,0.1)]"
       />
       {isAuthPage ? (
         <>

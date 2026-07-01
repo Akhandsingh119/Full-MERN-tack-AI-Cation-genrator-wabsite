@@ -163,11 +163,75 @@ body {
 }
 
 .Toastify__toast-container { z-index: 10000 !important; }
-.Toastify__toast { background: var(--color-charcoal); border: 1px solid var(--color-gold-dim); color: var(--color-champagne); font-family: var(--font-body); }
-.Toastify__close-button { color: var(--color-pewter); }
-.Toastify__close-button:hover { color: var(--color-champagne); }
-.Toastify__progress-bar { background: var(--color-gold); }
-.Toastify__toast--success { border-color: rgba(212,175,55,0.5); }
-.Toastify__toast--error { border-color: rgba(239,68,68,0.5); }
-.Toastify__toast--info { border-color: rgba(212,175,55,0.3); }
-.Toastify__toast--warning { border-color: rgba(212,175,55,0.6); }
+
+/* Base toast container styles matching the charcoal/gold theme */
+.Toastify__toast {
+  background: var(--color-charcoal);
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  color: var(--color-champagne);
+  font-family: var(--font-body);
+  box-shadow: 0 0 15px rgba(212, 175, 55, 0.1);
+  border-radius: 0; /* Matches your sharp design aesthetic */
+  padding: 16px;
+}
+
+.Toastify__toast-body {
+  color: var(--color-champagne);
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+}
+
+/* Close button styling */
+.Toastify__close-button {
+  color: var(--color-pewter);
+  transition: color 0.3s ease;
+}
+
+.Toastify__close-button:hover,
+.Toastify__close-button:focus {
+  color: var(--color-champagne);
+}
+
+/* Progress bar base styling */
+.Toastify__progress-bar {
+  background: var(--color-gold);
+  height: 2px;
+  opacity: 0.7;
+}
+
+/* State-specific toast styling to match your luxury theme */
+.Toastify__toast--default {
+  border-left: 4px solid var(--color-gold);
+}
+
+.Toastify__toast--success {
+  border-left: 4px solid var(--color-gold);
+}
+
+.Toastify__toast--success .Toastify__progress-bar {
+  background: var(--color-gold);
+}
+
+.Toastify__toast--error {
+  border-left: 4px solid #EF4444;
+}
+
+.Toastify__toast--error .Toastify__progress-bar {
+  background: #EF4444;
+}
+
+.Toastify__toast--info {
+  border-left: 4px solid #3B82F6;
+}
+
+.Toastify__toast--info .Toastify__progress-bar {
+  background: #3B82F6;
+}
+
+.Toastify__toast--warning {
+  border-left: 4px solid #F59E0B;
+}
+
+.Toastify__toast--warning .Toastify__progress-bar {
+  background: #F59E0B;
+}

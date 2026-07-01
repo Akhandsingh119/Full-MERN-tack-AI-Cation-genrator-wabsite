@@ -20,7 +20,6 @@ api.interceptors.response.use(
   (error) => {
     if (error.response?.status === 401) {
       window.dispatchEvent(new CustomEvent('auth:unauthorized'));
-      toast.error('Session expired. Please sign in again.');
     }
     return Promise.reject(error);
   }
