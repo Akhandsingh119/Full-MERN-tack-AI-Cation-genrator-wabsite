@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
+import { toast } from 'react-toastify';
 import api from '../api/axios';
 import Button from '../components/Button';
 import LoadingSpinner from '../components/LoadingSpinner';
@@ -28,6 +29,7 @@ export default function HistoryPage() {
       setFiltered(res.data);
     } catch (err) {
       if (err.response?.status === 401) navigate('/login');
+      else toast.error('Failed to load history');
     } finally {
       setLoading(false);
     }
@@ -45,7 +47,7 @@ export default function HistoryPage() {
   const handleCopy = async (id, item) => {
     const variantKey = cardVariant[id] || 'medium';
     const text = item.variants?.[variantKey] || item.caption;
-    try { await navigator.clipboard.writeText(text); setCopiedId(id); setTimeout(() => setCopiedId(null), 2000); } catch {}
+    try { await navigator.clipboard.writeText(text); setCopiedId(id); toast.info('Copied to clipboard'); setTimeout(() => setCopiedId(null), 2000); } catch {}
   };
 
   const handleDelete = async () => {
@@ -59,7 +61,10 @@ export default function HistoryPage() {
       setDeleteTarget(null);
       const delCaption = deleted.variants?.medium || deleted.caption || '';
       addNotification('deleted', 'Caption Deleted', deleted.image, delCaption);
-    } catch {} finally { setDeleting(false); }
+      toast.success('Caption deleted');
+    } catch {
+      toast.error('Failed to delete caption');
+    } finally { setDeleting(false); }
   };
 
   const formatDate = (dateStr) => {

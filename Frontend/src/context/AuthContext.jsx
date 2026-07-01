@@ -1,4 +1,5 @@
 import React, { createContext, useState, useEffect, useCallback } from 'react';
+import { toast } from 'react-toastify';
 import api from '../api/axios';
 
 export const AuthContext = createContext(null);
@@ -42,10 +43,13 @@ export function AuthProvider({ children }) {
       setLoading(true);
       setError(null);
       const response = await api.post('/auth/register', { username, password });
+      toast.success('Account created successfully!');
       await checkAuth();
       return response.data;
     } catch (err) {
-      setError(err.response?.data?.message || 'Registration failed');
+      const msg = err.response?.data?.message || 'Registration failed';
+      setError(msg);
+      toast.error(msg);
       throw err;
     } finally {
       setLoading(false);
@@ -57,10 +61,13 @@ export function AuthProvider({ children }) {
       setLoading(true);
       setError(null);
       const response = await api.post('/auth/login', { username, password });
+      toast.success('Welcome back!');
       await checkAuth();
       return response.data;
     } catch (err) {
-      setError(err.response?.data?.message || 'Login failed');
+      const msg = err.response?.data?.message || 'Login failed';
+      setError(msg);
+      toast.error(msg);
       throw err;
     } finally {
       setLoading(false);
@@ -74,8 +81,11 @@ export function AuthProvider({ children }) {
       setUser(null);
       setIsAuthenticated(false);
       setError(null);
+      toast.success('Logged out successfully');
     } catch (err) {
-      setError(err.response?.data?.message || 'Logout failed');
+      const msg = err.response?.data?.message || 'Logout failed';
+      setError(msg);
+      toast.error(msg);
     } finally {
       setLoading(false);
     }

@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { toast } from 'react-toastify';
 
 const api = axios.create({
    baseURL: "https://full-mern-tack-ai-cation-genrator-w.vercel.app/api",
@@ -19,6 +20,7 @@ api.interceptors.response.use(
   (error) => {
     if (error.response?.status === 401) {
       window.dispatchEvent(new CustomEvent('auth:unauthorized'));
+      toast.error('Session expired. Please sign in again.');
     }
     return Promise.reject(error);
   }

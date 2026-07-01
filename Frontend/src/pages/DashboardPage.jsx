@@ -1,5 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { toast } from 'react-toastify';
 import { useAuth } from '../hooks/useAuth';
 import { useNotification } from '../context/NotificationContext';
 import TopNavbar from '../components/TopNavbar';
@@ -58,8 +59,10 @@ export default function DashboardPage() {
       setResult(response.data);
       const caption = response.data.variants?.medium || response.data.caption || '';
       addNotification('created', 'Caption Generated Successfully', previewUrl, caption);
+      toast.success('Caption Generated Successfully');
     } catch (err) {
       setError(err.response?.data?.message || 'Failed to generate caption. Please try again.');
+      toast.error(err.response?.data?.message || 'Failed to generate caption. Please try again.');
     } finally { setUploading(false); }
   };
 
@@ -68,7 +71,7 @@ export default function DashboardPage() {
 
   const handleCopy = async () => {
     if (!currentCaption) return;
-    try { await navigator.clipboard.writeText(currentCaption); setCopied(true); setTimeout(() => setCopied(false), 2000); } catch {}
+    try { await navigator.clipboard.writeText(currentCaption); setCopied(true); toast.info('Caption copied to clipboard'); setTimeout(() => setCopied(false), 2000); } catch {}
   };
 
   const handleCopyHashtags = async () => {
@@ -76,6 +79,7 @@ export default function DashboardPage() {
     try {
       await navigator.clipboard.writeText(result.hashtags.join(' '));
       setCopiedHashtags(true);
+      toast.info('Hashtags copied to clipboard');
       setTimeout(() => setCopiedHashtags(false), 2000);
     } catch {}
   };
