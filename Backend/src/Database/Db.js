@@ -1,13 +1,9 @@
 const mongoose=require('mongoose')
 
-
-  function  connecDB()
+async function connecDB()
 {
-    mongoose.connect(process.env.Mongo_Db).then(()=>{
-        console.log("console is sucessfully connected to DB")
-    }).catch((err)=>{
-console.log(err)
-    })
+    await mongoose.connect(process.env.Mongo_Db)
+    console.log("DB is successfully connected")
 }
 
 module.exports=connecDB 
