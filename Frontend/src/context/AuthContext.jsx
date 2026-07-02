@@ -38,11 +38,11 @@ export function AuthProvider({ children }) {
     return () => window.removeEventListener('auth:unauthorized', handleUnauthorized);
   }, []);
 
-  const register = async (username, password) => {
+  const register = async (username, email, password) => {
     try {
       setLoading(true);
       setError(null);
-      const response = await api.post('/auth/register', { username, password });
+      const response = await api.post('/auth/register', { username, email, password });
       toast.success('Account created successfully!');
       await checkAuth();
       return response.data;
@@ -56,11 +56,11 @@ export function AuthProvider({ children }) {
     }
   };
 
-  const login = async (username, password) => {
+  const login = async (identifier, password) => {
     try {
       setLoading(true);
       setError(null);
-      const response = await api.post('/auth/login', { username, password });
+      const response = await api.post('/auth/login', { identifier, password });
       toast.success('Welcome back!');
       await checkAuth();
       return response.data;

@@ -5,7 +5,7 @@ import InputField from '../components/InputField';
 import Button from '../components/Button';
 
 export default function LoginPage() {
-  const [username, setUsername] = useState('');
+  const [identifier, setIdentifier] = useState('');
   const [password, setPassword] = useState('');
   const [fieldErrors, setFieldErrors] = useState({});
   const { login, error, loading, clearError } = useAuth();
@@ -13,7 +13,7 @@ export default function LoginPage() {
 
   const validate = () => {
     const errors = {};
-    if (!username.trim()) errors.username = 'Username is required';
+    if (!identifier.trim()) errors.identifier = 'Username or email is required';
     if (!password) errors.password = 'Password is required';
     setFieldErrors(errors);
     return Object.keys(errors).length === 0;
@@ -23,7 +23,7 @@ export default function LoginPage() {
     e.preventDefault();
     clearError();
     if (!validate()) return;
-    try { await login(username, password); navigate('/dashboard'); } catch {}
+    try { await login(identifier, password); navigate('/dashboard'); } catch {}
   };
 
   return (
@@ -46,12 +46,17 @@ export default function LoginPage() {
 
         <div className="bg-charcoal border border-gold/30 corner-decor p-6 sm:p-8">
           <form onSubmit={handleSubmit} noValidate className="space-y-5">
-            <InputField id="username" label="Username" type="text" placeholder="Enter your username"
-              value={username} onChange={(e) => { setUsername(e.target.value); setFieldErrors(p => ({ ...p, username: '' })); }}
-              error={fieldErrors.username} disabled={loading} required />
+            <InputField id="identifier" label="Username or Email" type="text" placeholder="Enter your username or email"
+              value={identifier} onChange={(e) => { setIdentifier(e.target.value); setFieldErrors(p => ({ ...p, identifier: '' })); }}
+              error={fieldErrors.identifier} disabled={loading} required autoComplete="username" />
             <InputField id="password" label="Password" type="password" placeholder="Enter your password"
               value={password} onChange={(e) => { setPassword(e.target.value); setFieldErrors(p => ({ ...p, password: '' })); }}
-              error={fieldErrors.password} disabled={loading} required />
+              error={fieldErrors.password} disabled={loading} required autoComplete="current-password" />
+            <div className="flex justify-end -mt-2">
+              <Link to="/forgot-password" className="text-xs font-body uppercase tracking-widest text-pewter hover:text-gold transition-colors duration-300">
+                Forgot Password?
+              </Link>
+            </div>
             {error && (
               <div className="p-3 border border-red-500/30 bg-red-500/5 flex items-center gap-2" role="alert">
                 <svg className="w-4 h-4 text-red-400 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">

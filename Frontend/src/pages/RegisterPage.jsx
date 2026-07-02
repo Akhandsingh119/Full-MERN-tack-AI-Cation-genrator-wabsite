@@ -6,6 +6,7 @@ import Button from '../components/Button';
 
 export default function RegisterPage() {
   const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [fieldErrors, setFieldErrors] = useState({});
@@ -16,6 +17,8 @@ export default function RegisterPage() {
     const errors = {};
     if (!username.trim()) errors.username = 'Username is required';
     else if (username.trim().length < 3) errors.username = 'Username must be at least 3 characters';
+    if (!email.trim()) errors.email = 'Email is required';
+    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())) errors.email = 'Please enter a valid email address';
     if (!password) errors.password = 'Password is required';
     else if (password.length < 6) errors.password = 'Password must be at least 6 characters';
     if (password !== confirmPassword) errors.confirmPassword = 'Passwords do not match';
@@ -27,7 +30,7 @@ export default function RegisterPage() {
     e.preventDefault();
     clearError();
     if (!validate()) return;
-    try { await register(username, password); navigate('/dashboard'); } catch {}
+    try { await register(username, email, password); navigate('/dashboard'); } catch {}
   };
 
   return (
@@ -52,13 +55,16 @@ export default function RegisterPage() {
           <form onSubmit={handleSubmit} noValidate className="space-y-5">
             <InputField id="username" label="Username" type="text" placeholder="Choose a username"
               value={username} onChange={(e) => { setUsername(e.target.value); setFieldErrors(p => ({ ...p, username: '' })); }}
-              error={fieldErrors.username} disabled={loading} required />
+              error={fieldErrors.username} disabled={loading} required autoComplete="username" />
+            <InputField id="email" label="Email" type="email" placeholder="Enter your email address"
+              value={email} onChange={(e) => { setEmail(e.target.value); setFieldErrors(p => ({ ...p, email: '' })); }}
+              error={fieldErrors.email} disabled={loading} required autoComplete="email" />
             <InputField id="password" label="Password" type="password" placeholder="Create a password"
               value={password} onChange={(e) => { setPassword(e.target.value); setFieldErrors(p => ({ ...p, password: '' })); }}
-              error={fieldErrors.password} disabled={loading} required />
+              error={fieldErrors.password} disabled={loading} required autoComplete="new-password" />
             <InputField id="confirmPassword" label="Confirm Password" type="password" placeholder="Confirm your password"
               value={confirmPassword} onChange={(e) => { setConfirmPassword(e.target.value); setFieldErrors(p => ({ ...p, confirmPassword: '' })); }}
-              error={fieldErrors.confirmPassword} disabled={loading} required />
+              error={fieldErrors.confirmPassword} disabled={loading} required autoComplete="new-password" />
             {error && (
               <div className="p-3 border border-red-500/30 bg-red-500/5 flex items-center gap-2" role="alert">
                 <svg className="w-4 h-4 text-red-400 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
